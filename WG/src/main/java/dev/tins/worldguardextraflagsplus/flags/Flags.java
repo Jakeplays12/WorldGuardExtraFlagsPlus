@@ -48,6 +48,7 @@ public final class Flags
 	public final static SetFlag<PotionEffect> GIVE_EFFECTS = new SetFlag("give-effects", new PotionEffectFlag(null));
 	
 	public final static StateFlag FLY = new StateFlag("fly", false);
+	public final static StateFlag FLYESSENTIALSX = new StateFlag("flyEssentialsX", false);
 	
 	public final static SetFlag<SoundData> PLAY_SOUNDS = new SetFlag("play-sounds", new SoundDataFlag(null));
 	

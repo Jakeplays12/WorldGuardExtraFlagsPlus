@@ -6,6 +6,9 @@ import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.session.SessionManager;
+import org.bukkit.plugin.Plugin;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -217,12 +220,12 @@ public class PlayerListener implements Listener
 			Boolean value = wgSession.getHandler(FlyFlagHandler.class).getCurrentValue();
 			if (value != null)
 			{
-				WorldGuardUtils.getScheduler().runAtEntity(player, (wrappedTask) -> checkFlyStatus(player, player.getAllowFlight()));
+				WorldGuardUtils.getScheduler().getScheduler().runAtEntity(player, (wrappedTask) -> checkFlyStatus(player, player.getAllowFlight()));
 			}
 		}
 		else
 		{
-			WorldGuardUtils.getScheduler().runAtEntity(player, (wrappedTask) -> checkFlyStatus(player, null));
+			WorldGuardUtils.getScheduler().getScheduler().runAtEntity(player, (wrappedTask) -> checkFlyStatus(player, null));
 		}
 	}
 	
@@ -306,11 +309,11 @@ public class PlayerListener implements Listener
 
 		//Some plugins toggle flight off on world change based on permissions,
 		//so we need to make sure to force the flight status.
-		Boolean flyValue = this.sessionManager.get(this.worldGuardPlugin.wrapPlayer(player)).getHandler(FlyFlagHandler.class).getCurrentValue();
-		if (flyValue != null)
+		Boolean value = this.sessionManager.get(this.worldGuardPlugin.wrapPlayer(player)).getHandler(FlyFlagHandler.class).getCurrentValue();
+		if (value != null)
 		{
-			WorldGuardUtils.getScheduler().runAtEntity(player, (wrappedTask) -> player.setAllowFlight(flyValue));
-		}
+			WorldGuardUtils.getScheduler().runAtEntity(player, (wrappedTask) -> player.setAllowFlight(value));
+		};
 		
 		// Check collision flag on world change
 		LocalPlayer localPlayer = this.worldGuardPlugin.wrapPlayer(player);

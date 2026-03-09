@@ -2,6 +2,7 @@ package dev.tins.worldguardextraflagsplus.config;
 
 import de.exlll.configlib.Comment;
 import de.exlll.configlib.Configuration;
+import dev.tins.worldguardextraflagsplus.config.PluginConfig.GodmodeSettings;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,6 +41,12 @@ public final class PluginConfig {
 	private GodmodeSettings godmode = new GodmodeSettings();
 
 	@Comment({
+		"Hook settings",
+		"Controls behavior of the hook flags"
+	})
+	private HookSettings hook = new HookSettings();
+
+	@Comment({
 		"Disable chambered ender pearl settings",
 		"Controls behavior of the disable-chambered-enderpearl flag"
 	})
@@ -71,6 +78,16 @@ public final class PluginConfig {
 			"Default: false"
 		})
 		private boolean autoGiveGodmodeRegionLeft = false;
+	}
+	@Getter
+	@NoArgsConstructor
+	@Configuration
+	public static class HookSettings {
+		@Comment({
+			"Turns on and off Plugin Hooks",
+			"Default: true"
+		})
+		private boolean flyEssentialsX = false;
 	}
 
 	@Getter

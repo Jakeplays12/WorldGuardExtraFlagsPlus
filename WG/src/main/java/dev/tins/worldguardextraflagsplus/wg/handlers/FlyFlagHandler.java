@@ -23,9 +23,31 @@ import dev.tins.worldguardextraflagsplus.flags.Flags;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.session.Session;
+import com.sk89q.worldguard.session.SessionManager;
+import com.sk89q.worldguard.LocalPlayer;
+
+import org.bukkit.entity.Player;
+
 
 public class FlyFlagHandler extends FlagValueChangeHandler<State>
 {
+	public static void recheckPlayer(Player player) {
+
+	LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
+
+	SessionManager manager = WorldGuard.getInstance()
+			.getPlatform()
+			.getSessionManager();
+
+	Session session = manager.get(localPlayer);
+
+	if (session != null) {
+		session.testMoveTo(localPlayer, localPlayer.getLocation(), MoveType.MOVE);
+	}
+};
 	public static final Factory FACTORY()
 	{
 		return new Factory();
@@ -39,6 +61,19 @@ public class FlyFlagHandler extends FlagValueChangeHandler<State>
             return new FlyFlagHandler(session);
         }
     }
+	private  boolean isFlyEssentialsX()
+	{
+		try
+		{
+			Class<?> configClass = Class.forName("dev.tins.worldguardextraflagsplus.Config");
+			java.lang.reflect.Method getMethod = configClass.getMethod("isFlyEssentialsX");
+			return (Boolean) getMethod.invoke(null);
+		}
+		catch (Exception e)
+		{
+			return false;
+		}
+	}
 
     @Getter private Boolean currentValue;
     @Setter private Boolean originalFly;
@@ -133,7 +168,7 @@ public class FlyFlagHandler extends FlagValueChangeHandler<State>
 				boolean value = state == State.ALLOW;
 
 				// Disable EssentialsX fly mode if it's enabled
-				if (isEssentialsAvailable() && essentialsAPI != null)
+				if (isEssentialsAvailable() && isFlyEssentialsX() == true && essentialsAPI != null)
 				{
 					try
 					{
@@ -186,7 +221,7 @@ public class FlyFlagHandler extends FlagValueChangeHandler<State>
 				Boolean cachedEssentialsFly = originalEssentialsFlyCache.get(playerUUID);
 				if (cachedEssentialsFly != null && cachedEssentialsFly)
 				{
-					if (isEssentialsAvailable() && essentialsAPI != null)
+					if (isEssentialsAvailable() && isFlyEssentialsX() == true && essentialsAPI != null)
 					{
 						try
 						{
@@ -223,7 +258,5 @@ public class FlyFlagHandler extends FlagValueChangeHandler<State>
 			}
 		});
 	}
+	
 }
-
-
-

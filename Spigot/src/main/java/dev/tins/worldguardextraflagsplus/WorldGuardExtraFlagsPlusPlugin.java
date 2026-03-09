@@ -187,6 +187,7 @@ public class WorldGuardExtraFlagsPlusPlugin extends JavaPlugin
 		if (Config.isFlagEnabled("walk-speed")) this.sessionManager.registerHandler(WalkSpeedFlagHandler.FACTORY(), null);
 		if (Config.isFlagEnabled("fly-speed")) this.sessionManager.registerHandler(FlySpeedFlagHandler.FACTORY(), null);
 		if (Config.isFlagEnabled("fly")) this.sessionManager.registerHandler(FlyFlagHandler.FACTORY(), null);
+		if (Config.isFlagEnabled("flyEssentialsX")) this.sessionManager.registerHandler(FlyFlagHandler.FACTORY(), null);
 		if (Config.isFlagEnabled("glide")) this.sessionManager.registerHandler(GlideFlagHandler.FACTORY(), null);
 		if (Config.isFlagEnabled("godmode")) this.sessionManager.registerHandler(GodmodeFlagHandler.FACTORY(), null);
 		if (Config.isFlagEnabled("play-sounds")) this.sessionManager.registerHandler(PlaySoundsFlagHandler.FACTORY(plugin), null);

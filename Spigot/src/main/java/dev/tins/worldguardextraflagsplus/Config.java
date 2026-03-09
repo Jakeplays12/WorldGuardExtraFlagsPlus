@@ -138,6 +138,10 @@ public class Config
 	{
 		return config != null ? config.getGodmode().isAutoGiveGodmodeRegionLeft() : false;
 	}
+	public static boolean isFlyEssentialsX()
+	{
+		return config != null ? config.getHook().isFlyEssentialsX() : false;
+	}
 
 	public static int getDisableChamberedEnderPearlTrackingExpirySeconds()
 	{
